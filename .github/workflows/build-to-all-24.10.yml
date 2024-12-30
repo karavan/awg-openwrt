@@ -92,7 +92,7 @@ jobs:
 
           # Setup & install feeds
           wget https://downloads.openwrt.org/releases/24.10.0-rc4/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/feeds.buildinfo -O feeds.conf
-          echo "src-git awgopenwrt https://github.com/Slava-Shchipunov/awg-openwrt.git" >> ./feeds.conf
+          echo "src-git awgopenwrt https://github.com/karavan/awg-openwrt.git" >> ./feeds.conf
           ./scripts/feeds update && ./scripts/feeds install -a
 
           # Setup config with AWG and dependencies
@@ -168,12 +168,12 @@ jobs:
           echo "Looking for old release files ending with: ${postfix}"
 
           # Получаем список всех артефактов релиза по имени
-          assets=$(gh release view "${{ matrix.build_env.tag }}" --repo Slava-Shchipunov/awg-openwrt --json assets --jq ".assets | .[] | select(.name | endswith(\"$postfix.ipk\")) | .name")
+          assets=$(gh release view "${{ matrix.build_env.tag }}" --repo karavan/awg-openwrt --json assets --jq ".assets | .[] | select(.name | endswith(\"$postfix.ipk\")) | .name")
 
           # Удаляем найденные артефакты по имени
           for asset_name in $assets; do
             echo "Deleting asset with name: $asset_name"
-            gh release delete-asset "${{ matrix.build_env.tag }}" "$asset_name" --repo Slava-Shchipunov/awg-openwrt
+            gh release delete-asset "${{ matrix.build_env.tag }}" "$asset_name" --repo karavan/awg-openwrt
           done
 
       - name: Release
