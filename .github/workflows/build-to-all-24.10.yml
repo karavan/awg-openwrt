@@ -168,12 +168,12 @@ jobs:
           echo "Looking for old release files ending with: ${postfix}"
 
           # Получаем список всех артефактов релиза по имени
-          assets=$(gh release view "${{ matrix.build_env.tag }}" --repo karavan/awg-openwrt --json assets --jq ".assets | .[] | select(.name | endswith(\"$postfix.ipk\")) | .name")
+          # assets=$(gh release view "${{ matrix.build_env.tag }}" --repo karavan/awg-openwrt --json assets --jq ".assets | .[] | select(.name | endswith(\"$postfix.ipk\")) | .name")
 
           # Удаляем найденные артефакты по имени
           for asset_name in $assets; do
             echo "Deleting asset with name: $asset_name"
-            gh release delete-asset "${{ matrix.build_env.tag }}" "$asset_name" --repo karavan/awg-openwrt
+            # gh release delete-asset "${{ matrix.build_env.tag }}" "$asset_name" --repo karavan/awg-openwrt
           done
 
       - name: Release
