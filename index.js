@@ -4,15 +4,15 @@ const core = require('@actions/core');
 
 const version = process.argv[2]; // Получение версии OpenWRT из аргумента командной строки
 
-const SNAPSHOT_TARGETS_TO_BUILD = ['armsr'];
-const SNAPSHOT_SUBTARGETS_TO_BUILD = ['armv8'];
+const TARGETS_TO_BUILD = ['armsr'];
+const SUBTARGETS_TO_BUILD = ['armv8'];
 
 if (!version) {
   core.setFailed('Version argument is required');
   process.exit(1);
 }
 
-const url = version === 'SNAPSHOT' ? 'https://downloads.openwrt.org/snapshots/targets/' : `https://downloads.openwrt.org/releases/${version}/targets/`;
+const url = version === 'v24.10.0-rc4' ? 'https://downloads.openwrt.org/releases/24.10.0-rc4/targets/' : `https://downloads.openwrt.org/releases/${version}/targets/`;
 
 async function fetchHTML(url) {
   try {
@@ -78,7 +78,7 @@ async function main() {
       for (const subtarget of subtargets) {
         const { vermagic, pkgarch } = await getDetails(target, subtarget);
 
-        if (version !== 'SNAPSHOT' || (SNAPSHOT_SUBTARGETS_TO_BUILD.includes(subtarget) && SNAPSHOT_TARGETS_TO_BUILD.includes(target))) {
+        if (version !== 'v24.10.0-rc4' || (SUBTARGETS_TO_BUILD.includes(subtarget) && TARGETS_TO_BUILD.includes(target))) {
           jobConfig.push({
             tag: version,
             target,
