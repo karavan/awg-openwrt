@@ -3,7 +3,7 @@ name: Build AmneziaWG for OpenWRT v24.10.* include relise candidates
 on:
   push:
     tags:
-      - "24.10.0-rc4"
+      - "v24.10.0-rc4"
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate Job Config
         id: generate-config
-        run: node index.js SNAPSHOT
+        run: node index.js v24.10.0-rc4
 
   build:
     name: "${{ matrix.build_env.tag }} - ${{ matrix.build_env.pkgarch}} :: ${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}} build"
