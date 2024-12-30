@@ -49,7 +49,7 @@ jobs:
           echo "Checking for release file: $RELEASE_FILE in release: $TAG"
 
           # Используем GitHub CLI для проверки наличия файла в релизе
-          if gh release view "$TAG" --repo Slava-Shchipunov/awg-openwrt --json assets --jq ".assets | .[].name" | grep -q "$RELEASE_FILE"; then
+          if gh release view "$TAG" --repo karavan/awg-openwrt --json assets --jq ".assets | .[].name" | grep -q "$RELEASE_FILE"; then
             echo "Release file $RELEASE_FILE already exists. Skipping job."
             echo "FILE_EXISTS=true" >> $GITHUB_ENV
           else
