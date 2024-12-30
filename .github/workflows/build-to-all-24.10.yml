@@ -30,7 +30,7 @@ jobs:
 
       - name: Generate Job Config
         id: generate-config
-        run: node index.js v24.10.0-rc4
+        run: node index.js v24.10.0-rc2
 
   build:
     name: "${{ matrix.build_env.tag }} - ${{ matrix.build_env.pkgarch}} :: ${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}} build"
@@ -66,12 +66,12 @@ jobs:
           echo "Skipping job as release file already exists."
           exit 0
 
-      - name: Get v24.10.0-rc4 commit SHA and device ARCH
+      - name: Get v24.10.0-rc2 commit SHA and device ARCH
         if: env.FILE_EXISTS == 'false'
         run: |
-          PROFILE_URL="https://downloads.openwrt.org/releases/24.10.0-rc4/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/profiles.json"
+          PROFILE_URL="https://downloads.openwrt.org/releases/24.10.0-rc2/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/profiles.json"
           COMMIT_SHA=$(wget -q $PROFILE_URL -O- | tr ',' '\n' | grep "version_code"| awk -F: '{print $2}' | tr -d '"' | awk -F- '{print $2}')
-          echo "v24.10.0-rc4 commit sha: $COMMIT_SHA"
+          echo "v24.10.0-rc2 commit sha: $COMMIT_SHA"
           echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
 
           DEVICE_ARCH=$(wget -q $PROFILE_URL -O- | tr ',' '\n' | grep "arch_packages"| awk -F: '{print $2}' | tr -d '"')
@@ -84,7 +84,7 @@ jobs:
           repository: openwrt/openwrt
           fetch-depth: 0
 
-      - name: Checkout v24.10.0-rc4 commit in openwrt repo
+      - name: Checkout v24.10.0-rc2 commit in openwrt repo
         if: env.FILE_EXISTS == 'false'
         run: git checkout ${{ env.COMMIT_SHA}}
 
@@ -94,12 +94,12 @@ jobs:
           echo "pkgarch: ${{ matrix.build_env.pkgarch}}, target:${{ matrix.build_env.target}}, subtarget: ${{ matrix.build_env.subtarget}}"
 
           # Setup & install feeds
-          wget https://downloads.openwrt.org/releases/24.10.0-rc4/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/feeds.buildinfo -O feeds.conf
+          wget https://downloads.openwrt.org/releases/24.10.0-rc2/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/feeds.buildinfo -O feeds.conf
           echo "src-git awgopenwrt https://github.com/karavan/awg-openwrt.git" >> ./feeds.conf
           ./scripts/feeds update && ./scripts/feeds install -a
 
           # Setup config with AWG and dependencies
-          wget https://downloads.openwrt.org/releases/24.10.0-rc4/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/config.buildinfo -O .config
+          wget https://downloads.openwrt.org/releases/24.10.0-rc2/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/config.buildinfo -O .config
           echo "CONFIG_PACKAGE_kmod-amneziawg=m" >> .config
           echo "CONFIG_PACKAGE_amneziawg-tools=y" >> .config
           echo "CONFIG_PACKAGE_luci-app-amneziawg=y" >> .config
