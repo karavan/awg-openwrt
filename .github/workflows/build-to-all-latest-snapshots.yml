@@ -1,14 +1,11 @@
-name: Build AmneziaWG for snapshot OpenWRT
-
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+name: Build AmneziaWG for OpenWRT v24.10.* include relise candidates
 
 on:
   push:
     tags:
-      - "SNAPSHOT"
+      - "v24.10.*"
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: '0 4 * * *'
   workflow_dispatch:
 
 jobs:
