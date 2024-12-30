@@ -6,7 +6,7 @@ env:
 on:
   push:
     tags:
-      - "v24.10.0-rc4"
+      - "v24.10.0-rc2"
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
