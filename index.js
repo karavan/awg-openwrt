@@ -12,7 +12,7 @@ if (!version) {
   process.exit(1);
 }
 
-const url = version === 'v24.10.0-rc4' ? 'https://downloads.openwrt.org/releases/24.10.0-rc4/targets/' : `https://downloads.openwrt.org/releases/${version}/targets/`;
+const url = version === 'v24.10.0-rc2' ? 'https://downloads.openwrt.org/releases/24.10.0-rc2/targets/' : `https://downloads.openwrt.org/releases/${version}/targets/`;
 
 async function fetchHTML(url) {
   try {
@@ -78,7 +78,7 @@ async function main() {
       for (const subtarget of subtargets) {
         const { vermagic, pkgarch } = await getDetails(target, subtarget);
 
-        if (version !== 'v24.10.0-rc4' || (SUBTARGETS_TO_BUILD.includes(subtarget) && TARGETS_TO_BUILD.includes(target))) {
+        if (version !== 'v24.10.0-rc2' || (SUBTARGETS_TO_BUILD.includes(subtarget) && TARGETS_TO_BUILD.includes(target))) {
           jobConfig.push({
             tag: version,
             target,
