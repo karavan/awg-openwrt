@@ -4,7 +4,7 @@ const core = require('@actions/core');
 
 const version = process.argv[2]; // Получение версии OpenWRT из аргумента командной строки
 
-const TARGETS_TO_BUILD = ['armsr'];
+const TARGETS_TO_BUILD = ['rockchip'];
 const SUBTARGETS_TO_BUILD = ['armv8'];
 
 if (!version) {
