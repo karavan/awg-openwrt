@@ -3,7 +3,7 @@ name: Build AmneziaWG for OpenWRT v24.10.* include relise candidates
 on:
   push:
     tags:
-      - "v24.10.*"
+      - "24.10.0-rc4"
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
